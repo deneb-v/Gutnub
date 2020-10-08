@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'googleID','refresh_token'
     ];
 
     /**
@@ -25,15 +25,21 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'refresh_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    static public function findUser($googleID){
+        return User::where('googleID',$googleID)->first();
+    }
+
+    static public function addGoogleUser($name, $email, $googleID, $refresh_token){
+        return User::create([
+            'name' => $name,
+            'email' => $email,
+            'googleID' => $googleID,
+            'refresh_token' => $refresh_token
+        ]);
+    }
+
+
 }

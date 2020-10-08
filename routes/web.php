@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'AccountController@loginView')->name('login');
+
+route::get('/auth/google','AccountController@redirectToGoogleAuth')->name('loginByGoogle');
+route::get('/auth/google/redirect','AccountController@googleAuthCallback')->name('googleCallback');
+route::get('logout','AccountController@logout')->name('logout');
+
+route::get('/home','UserController@homeView')->name('homeView');
