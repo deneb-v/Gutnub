@@ -26,7 +26,7 @@ Gutnub not github
 9. Run this command
     ```
     composer install
-    php artisan key:install
+    php artisan key:generate
     php artisan migrate
     php artisan db:seed
     ```
