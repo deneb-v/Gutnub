@@ -2,7 +2,10 @@
 
 @section('content')
 <div class="container-fluid">
-  <h1 class="mb-4 mt-3">{{ Auth::user()->name }}</h1>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">{{ Auth::user()->name }}</h1>
+        <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#modal_newproject">New project</button>
+    </div>
   <div class="row">
     {{-- Left Side --}}
     <div class="col-xl-6">
@@ -243,5 +246,34 @@
       </div>
   </div>
 
+    <div class="modal fade" id="modal_newproject" tabindex="-1" aria-labelledby="modal_newproject" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label>Project name</label>
+                            <input type="text" class="form-control" id="txt_projectName" name="txt_projectName">
+                        </div>
+                        <div class="form-group">
+                            <label>Due date</label>
+                            <input type="datetime-local" class="form-control" id="txt_projectdate" name="txt_projectdate">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">New project</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

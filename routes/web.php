@@ -20,3 +20,5 @@ route::get('/auth/google/redirect','AccountController@googleAuthCallback')->name
 route::get('logout','AccountController@logout')->name('logout');
 
 route::get('/home','UserController@homeView')->name('homeView');
+
+route::get('/test','GdriveController@test');
