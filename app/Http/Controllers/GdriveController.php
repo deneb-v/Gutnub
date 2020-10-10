@@ -15,13 +15,25 @@ use Illuminate\Support\Facades\Storage;
 class GdriveController extends Controller
 {
     private $drive;
-    public function __construct(Google_Client $client)
+    public function __construct($refresh_token=null)
     {
-        $this->middleware(function ($request, $next) use ($client) {
+        $client = new Google_Client();
+            Storage::disk('local')->put('client_secret.json', json_encode([
+                'web' => config('services.google')
+            ]));
+        $client->setAuthConfig(Storage::path('client_secret.json'));
+
+        if($refresh_token==null){
             $client->refreshToken(Auth::user()->refresh_token);
-            $this->drive = new Google_Service_Drive($client);
-            return $next($request);
-        });
+        }
+        else{
+            $client->refreshToken($refresh_token);
+        }
+
+        $this->drive = new Google_Service_Drive($client);
+        // $this->middleware(function ($request, $next) use ($client) {
+        //     return $next($request);
+        // });
     }
 
     public function getDrive(){
@@ -44,7 +56,8 @@ class GdriveController extends Controller
         } else {
             print "Files:\n";
             foreach ($results->getFiles() as $file) {
-                dump($file->getName(), $file->getID());
+                // dump($file->getName(), $file->getID());
+                print "name: ".$file->getName()." id: ".$file->getID().".\n";
             }
         }
     }
@@ -75,19 +88,20 @@ class GdriveController extends Controller
         // dd($this->drive);
         // $testupd = $this->drive->permissions->create('1DdLo-01SlmRYPFAlRsm6c5h6XYmaDeHt',$permission);
 
-        $folder_meta = new Google_Service_Drive_DriveFile(array(
-            'name' => 'woohooo',
-            'mimeType' => 'application/vnd.google-apps.folder',));
+        // $folder_meta = new Google_Service_Drive_DriveFile(array(
+        //     'name' => 'woohooo',
+        //     'mimeType' => 'application/vnd.google-apps.folder',));
 
-        $folder_meta->setParents('1DdLo-01SlmRYPFAlRsm6c5h6XYmaDeHt');
+        // $folder_meta->setParents('1DdLo-01SlmRYPFAlRsm6c5h6XYmaDeHt');
 
-        $this->createFile('test.txt','1DdLo-01SlmRYPFAlRsm6c5h6XYmaDeHt');
+        // $this->createFile('test.txt','1DdLo-01SlmRYPFAlRsm6c5h6XYmaDeHt');
         // $file = $this->drive->files->insert($folder_meta, [
         //     'fields' => [
         //         'id',
         //         ]
         // ]);
-        dd($folder_meta);
+        // $this->ListFolders('1DdLo-01SlmRYPFAlRsm6c5h6XYmaDeHt');
+        // $this->createFolder('');
 
     }
 
@@ -126,6 +140,17 @@ class GdriveController extends Controller
         // dd($folder_meta);
         $folder = $this->drive->files->create($folder_meta, array(
             'fields' => 'id'));
+        return $folder->id;
+    }
+
+    function createFolderIn($parent, $folder_name){
+        $meta = new Google_Service_Drive_DriveFile();
+        $meta->setName($folder_name);
+        $meta->setMimeType('application/vnd.google-apps.folder');
+        $meta->setParents(array($parent));
+        $folder = $this->drive->files->create($meta, array(
+            'fields' => 'id'
+        ));
         return $folder->id;
     }
 }

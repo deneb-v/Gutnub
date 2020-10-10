@@ -21,4 +21,12 @@ class Project extends Model
     static public function getProject($id){
         return Project::where('projectID', $id)->first();
     }
+
+    static public function addProject($folderID, $projectName, $dueDate ){
+        Project::create([
+            'projectID' => $folderID,
+            'projectName' => $projectName,
+            'projectDueDate' => $dueDate
+        ]);
+    }
 }

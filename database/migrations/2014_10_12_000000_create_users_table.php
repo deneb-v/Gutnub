@@ -15,9 +15,10 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('googleID')->unique();
-            $table->string('name');
+            $table->string('gutnubFolderID')->unique();
             $table->string('email')->unique();
+            $table->string('name');
+            $table->string('profilePicture');
             $table->string('refresh_token');
             $table->timestamps();
         });

@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'googleID','refresh_token'
+        'name', 'email', 'gutnubFolderID','profilePicture','refresh_token'
     ];
 
     /**
@@ -28,15 +28,16 @@ class User extends Authenticatable
         'refresh_token',
     ];
 
-    static public function findUser($googleID){
-        return User::where('googleID',$googleID)->first();
+    static public function findUser($email){
+        return User::where('email',$email)->first();
     }
 
-    static public function addGoogleUser($name, $email, $googleID, $refresh_token){
+    static public function addGoogleUser($name, $email, $gutnubFolderID, $profilePicture, $refresh_token){
         return User::create([
             'name' => $name,
             'email' => $email,
-            'googleID' => $googleID,
+            'gutnubFolderID' => $gutnubFolderID,
+            'profilePicture' => $profilePicture,
             'refresh_token' => $refresh_token
         ]);
     }

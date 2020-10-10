@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Project_member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,13 +15,19 @@ class UserController extends Controller
     }
 
     public function projectView($id){
+        $projectList = project::getAll();
         $project = Project::getProject($id);
-        return view('project',['project'=>$project]);
+
+
+
+
+
+        return view('project',['project'=>$project, 'projectList'=>$projectList]);
     }
 
     public function addProject(Request $req){
         $rules=[
-            'txt_projectName' => 'required',
+            'txt_projectName' => 'required|unique:projects,projectName',
             'txt_projectDate' => 'required|after:today'
         ];
         $attribute=[
@@ -31,6 +38,16 @@ class UserController extends Controller
             'required' => ':attribute must be filled.',
             'after' => ':attribute must be '
         ];
+        $this->validate($req, $rules, $message, $attribute);
+        $projectName = $req->txt_projectName;
+        $dueDate = $req->txt_projectDate;
+        // dd($req);
+        $drive = new GdriveController();
+        // dd($drive);
+        $folderID= $drive->createFolderIn(Auth::user()->gutnubFolderID,$projectName);
 
+        Project::addProject($folderID, $projectName, $dueDate);
+        Project_member::addProjectMember($folderID, Auth::user()->id, 'owner');
+        return redirect()->route('projectView',['id'=>$folderID]);
     }
 }

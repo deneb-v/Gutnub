@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container-fluid">
-  <h1>Hello World Project</h1>
-  <p>Due date: 24 December 2020, 23.59</p>
+  <h1>{{ $project->projectName }}</h1>
+  <p>Due date: {{ $project->projectDueDate }}</p>
 
   <div class="row">
     {{-- Left Side --}}

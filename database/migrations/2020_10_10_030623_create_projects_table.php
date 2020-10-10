@@ -15,7 +15,7 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->string('projectID')->primary();
-            $table->string('projectName');
+            $table->string('projectName')->unique();
             $table->dateTime('projectDueDate');
             $table->timestamps();
         });

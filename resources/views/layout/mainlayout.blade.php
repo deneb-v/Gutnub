@@ -55,7 +55,7 @@
 
       @forelse ($projectList as $item)
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('projectView',['id' => $item->projectID]) }}">
+            <a class="nav-link pb-0" href="{{ route('projectView',['id' => $item->projectID]) }}">
                 <i class="far fa-file"></i>
                 <span>{{ $item->projectName }}</span>
             </a>
@@ -88,7 +88,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('createProject') }}" method="POST" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="form-group">
                                 <label>Project name</label>
@@ -96,7 +96,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Due date</label>
-                                <input type="datetime-local" class="form-control" id="txt_projectdate" name="txt_projectdate">
+                                <input type="datetime-local" class="form-control" id="txt_projectDate" name="txt_projectDate">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -123,8 +123,8 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                <img class="img-profile rounded-circle" src="{{ Auth::user()->profilePicture }}">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
