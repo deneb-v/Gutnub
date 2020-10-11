@@ -2,6 +2,50 @@
 
 @section('content')
 <div class="container-fluid">
+    @if ($errors->any())
+        <div class="alert alert-danger" role="alert">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $err)
+                    <li>{{$err}}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @if (Session::has('success'))
+        <div class="alert alert-success mt-3" role="alert">
+            {{Session::get('success')}}
+        </div>
+    @endif
+    @if (Session::has('error'))
+        <div class="alert alert-danger mt-3" role="alert">
+            {{Session::get('error')}}
+        </div>
+    @endif
+    <div class="modal fade" id="modal_addColabolator" tabindex="-1" aria-labelledby="modal_addColabolator" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add colabolator</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('addColllabolator', ['id' => $project->projectID]) }}" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" id="txt_projectName" name="txt_email">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
   <h1>{{ $project->projectName }}</h1>
   <p>Due date: {{ $project->projectDueDate }}</p>
 
@@ -12,18 +56,19 @@
       <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h2 class="m-0 font-weight-bold text-primary">Collaborator</h2>
-          <button class="btn btn-primary btn-sm">Add Collaborator</button>
+          <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_addColabolator">Add Collaborator</button>
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-2 align-items-center text-center">
-              <button class="btn-circle btn-lg">JD</button>
-              <p class="text-center">Jhon Doe</p>
-            </div>
-            <div class="col-2 align-items-center text-center">
-              <button class="btn-circle btn-lg">SS</button>
-              <p class="text-center">Shanna S</p>
-            </div>
+              @foreach ($collabolator as $item)
+                <div class="col-2 align-items-center text-center">
+                    <img class="rounded-circle" src="{{ $item->profilePicture }}" style="width: 50px">
+                    <p class="text-center mb-0" data-placement="bottom" data-toggle="tooltip" title="{{ $item->name }}">{{ Str::limit($item->name, 7, '..') }}</p>
+                    @if ($item->role == 'owner')
+                        <span class="badge badge-success">Owner</span>
+                    @endif
+                </div>
+              @endforeach
           </div>
         </div>
       </div>

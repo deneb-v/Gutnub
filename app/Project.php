@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Project extends Model
 {
@@ -16,6 +17,18 @@ class Project extends Model
 
     static public function getAll(){
         return Project::all();
+    }
+
+    static public function getProjectNameListbyUser($id){
+        $project = DB::table('projects as p')
+            ->join('project_members as pm','p.projectID','=','pm.projectID')
+            ->where('pm.userID','=',$id)
+            ->get([
+                'p.projectID as projectID',
+                'p.projectName as projectName'
+            ]);
+
+        return $project;
     }
 
     static public function getProject($id){

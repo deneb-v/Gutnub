@@ -4,25 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Project_member;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function homeView(){
-        $projectList = Project::getAll();
+        $projectList = Project::getProjectNameListbyUser(Auth::user()->id);
         return view('home',['projectList' => $projectList]);
     }
 
     public function projectView($id){
-        $projectList = project::getAll();
+        $projectList = Project::getProjectNameListbyUser(Auth::user()->id);
         $project = Project::getProject($id);
+        $collabolator = Project_member::getProjectMember($id);
 
-
-
-
-
-        return view('project',['project'=>$project, 'projectList'=>$projectList]);
+        return view('project',['project'=>$project, 'projectList'=>$projectList, 'collabolator'=>$collabolator]);
     }
 
     public function addProject(Request $req){
@@ -49,5 +47,36 @@ class UserController extends Controller
         Project::addProject($folderID, $projectName, $dueDate);
         Project_member::addProjectMember($folderID, Auth::user()->id, 'owner');
         return redirect()->route('projectView',['id'=>$folderID]);
+    }
+
+    public function addColabolator(Request $req, $id){
+        $rules=[
+            'txt_email' => 'required|email|ends_with:@gmail.com',
+        ];
+        $attribute=[
+            'txt_email' => 'Collabolator email',
+        ];
+        $message=[
+            'required' => ':attribute must be filled.',
+            'email' => ':attribute must be valid email',
+            'ends_with' => ':attribute must be google email'
+        ];
+        $this->validate($req, $rules, $message, $attribute);
+
+        $email = $req->txt_email;
+        $drive = new GdriveController();
+        $user = User::findUser($email);
+
+        if($user == null){
+            return back()->with('error', 'User is not Gutnub user');
+        }
+
+        if(!Project_member::isMemberUnique($id, $user->id)){
+            return back()->with('error', 'User already join this project');
+        }
+
+        $drive->addPermission($id, $email);
+        Project_member::addProjectMember($id, $user->id, 'member');
+        return redirect()->route('projectView',['id' => $id])->with('success', $user->name.' successfully added');
     }
 }
