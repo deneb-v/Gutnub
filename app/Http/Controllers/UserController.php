@@ -10,29 +10,32 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function homeView(){
-        $projectList = Project::getProjectNameListbyUser(Auth::user()->id);
-        return view('home',['projectList' => $projectList]);
+    public function homeView()
+    {
+        $projectList = Project::getProjectListbyUser(Auth::user()->id);
+        return view('home', ['projectList' => $projectList]);
     }
 
-    public function projectView($id){
+    public function projectView($id)
+    {
         $projectList = Project::getProjectNameListbyUser(Auth::user()->id);
         $project = Project::getProject($id);
         $collabolator = Project_member::getProjectMember($id);
 
-        return view('project',['project'=>$project, 'projectList'=>$projectList, 'collabolator'=>$collabolator]);
+        return view('project', ['project' => $project, 'projectList' => $projectList, 'collabolator' => $collabolator]);
     }
 
-    public function addProject(Request $req){
-        $rules=[
+    public function addProject(Request $req)
+    {
+        $rules = [
             'txt_projectName' => 'required|unique:projects,projectName',
             'txt_projectDate' => 'required|after:today'
         ];
-        $attribute=[
+        $attribute = [
             'txt_projectName' => 'Project name',
             'txt_projectDate' => 'Due date'
         ];
-        $message=[
+        $message = [
             'required' => ':attribute must be filled.',
             'after' => ':attribute must be '
         ];
@@ -42,21 +45,22 @@ class UserController extends Controller
         // dd($req);
         $drive = new GdriveController();
         // dd($drive);
-        $folderID= $drive->createFolderIn(Auth::user()->gutnubFolderID,$projectName);
+        $folderID = $drive->createFolderIn(Auth::user()->gutnubFolderID, $projectName);
 
         Project::addProject($folderID, $projectName, $dueDate);
         Project_member::addProjectMember($folderID, Auth::user()->id, 'owner');
-        return redirect()->route('projectView',['id'=>$folderID]);
+        return redirect()->route('projectView', ['id' => $folderID]);
     }
 
-    public function addColabolator(Request $req, $id){
-        $rules=[
+    public function addColabolator(Request $req, $id)
+    {
+        $rules = [
             'txt_email' => 'required|email|ends_with:@gmail.com',
         ];
-        $attribute=[
+        $attribute = [
             'txt_email' => 'Collabolator email',
         ];
-        $message=[
+        $message = [
             'required' => ':attribute must be filled.',
             'email' => ':attribute must be valid email',
             'ends_with' => ':attribute must be google email'
@@ -67,16 +71,16 @@ class UserController extends Controller
         $drive = new GdriveController();
         $user = User::findUser($email);
 
-        if($user == null){
+        if ($user == null) {
             return back()->with('error', 'User is not Gutnub user');
         }
 
-        if(!Project_member::isMemberUnique($id, $user->id)){
+        if (!Project_member::isMemberUnique($id, $user->id)) {
             return back()->with('error', 'User already join this project');
         }
 
         $drive->addPermission($id, $email);
         Project_member::addProjectMember($id, $user->id, 'member');
-        return redirect()->route('projectView',['id' => $id])->with('success', $user->name.' successfully added');
+        return redirect()->route('projectView', ['id' => $id])->with('success', $user->name . ' successfully added');
     }
 }

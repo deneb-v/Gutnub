@@ -12,7 +12,7 @@
  */
 :root {
   --blue: #028889;
-  --indigo: #6610f2;
+  --indigo: #017070;
   --purple: #6f42c1;
   --pink: #e83e8c;
   --red: #e74a3b;
@@ -165,7 +165,7 @@ a {
 }
 
 a:hover {
-  color: #224abe;
+  color: #017070;
   text-decoration: underline;
 }
 
@@ -2383,8 +2383,8 @@ fieldset:disabled a.btn {
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #2e59d9;
-  border-color: #2653d4;
+  background-color: #017070;
+  border-color: #014A4A;
 }
 
 .btn-primary:focus, .btn-primary.focus {
