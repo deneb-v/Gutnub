@@ -115,8 +115,7 @@ class GdriveController extends Controller
             'uploadType' => 'multipart',
             'fields' => 'id'
         ]);
-
-        dd($file->id);
+        return $file->id;
     }
 
     function deleteFileOrFolder($id){

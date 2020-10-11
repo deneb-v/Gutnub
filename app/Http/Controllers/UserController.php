@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
 use App\Project;
 use App\Project_member;
 use App\User;
@@ -21,8 +22,12 @@ class UserController extends Controller
         $projectList = Project::getProjectNameListbyUser(Auth::user()->id);
         $project = Project::getProject($id);
         $collabolator = Project_member::getProjectMember($id);
+        $latestFile = File::getLatestFileDetail($id);
 
-        return view('project', ['project' => $project, 'projectList' => $projectList, 'collabolator' => $collabolator]);
+        return view('project',['project'=>$project,
+            'projectList'=>$projectList,
+            'collabolator'=>$collabolator,
+            'latestFile'=>$latestFile]);
     }
 
     public function addProject(Request $req)
@@ -82,5 +87,14 @@ class UserController extends Controller
         $drive->addPermission($id, $email);
         Project_member::addProjectMember($id, $user->id, 'member');
         return redirect()->route('projectView', ['id' => $id])->with('success', $user->name . ' successfully added');
+    }
+
+    public function uploadFile(Request $req, $id){
+        $drive = new GdriveController();
+
+        $fileID = $drive->createFile($req->file('file_upload'), $id);
+        File::addFile($fileID, $id, Auth::user()->id, $req->file('file_upload')->getClientOriginalName(), $req->txt_description);
+
+        return redirect()->route('projectView',['id' => $id])->with('success', 'File successfuly uploaded');
     }
 }

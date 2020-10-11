@@ -22,5 +22,6 @@ route::get('logout','AccountController@logout')->name('logout');
 route::get('/home','UserController@homeView')->name('homeView');
 route::post('/createproject','UserController@addProject')->name('createProject');
 route::get('/project/{id}','UserController@projectView')->name('projectView');
-route::post('/project/{id}/addCollabolator', 'UserController@addColabolator')->name('addColllabolator');
+route::post('/project/{id}/addcollabolator', 'UserController@addColabolator')->name('addColllabolator');
+route::post('/project/{id}/uploadfile', 'UserController@uploadFile')->name('uploadFile');
 route::get('/test','GdriveController@test');
