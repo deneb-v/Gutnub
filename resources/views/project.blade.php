@@ -46,6 +46,36 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="model_upload" tabindex="-1" aria-labelledby="model_upload" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add colabolator</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('uploadFile', ['id' => $project->projectID]) }}" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label>File</label>
+                            <input type="file" class="form-control-file" id="file_upload" name="file_upload">
+                        </div>
+                        <div class="form-group">
+                            <label>File</label>
+                            <input type="text" class="form-control" id="txt_description" name="txt_description" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
   <h1>{{ $project->projectName }}</h1>
   <p>Due date: {{ $project->projectDueDate }}</p>
 
@@ -78,23 +108,25 @@
       <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h2 class="m-0 font-weight-bold text-primary">Latest Project File</h2>
-          <button class="btn btn-primary btn-sm">Upload File</button>
+          <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#model_upload">Upload File</button>
         </div>
         <div class="card-body">
-          <p>
-            Uploaded by: <b> Jhon Doe </b> <br>
-            Time: <b>21 November 2020, 22.01 </b><br>
-            Description: <b>add santa to the document</b> <br>
-          </p>
+            @if ($latestFile!=null)
+                <p>
+                Uploaded by: <b> {{ $latestFile->userName }} </b> <br>
+                Time: <b>{{ $latestFile->created_at }}</b><br>
+                Description: <b>{{ $latestFile->description }}</b> <br>
+                </p>
+                <div class="col-xl-12 col-md-12 mb-12">
+                  <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body d-flex flex-row justify-content-between">
+                      <span> <i class="fas fa-folder"></i>{{ $latestFile->filename }}</span>
+                      <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
+                    </div>
+                  </div>
+                </div>
+            @endif
 
-          <div class="col-xl-12 col-md-12 mb-12">
-            <div class="card border-left-primary shadow h-100 py-2">
-              <div class="card-body d-flex flex-row justify-content-between">
-                <span> <i class="fas fa-folder"></i>  Merry Chrismas.docx</span>
-                <span><i class="fas fa-arrow-circle-down"></i></span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       {{-- End Colaborator --}}

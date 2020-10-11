@@ -19,6 +19,7 @@ class CreateFilesTable extends Migration
             $table->foreign('projectID')->references('projectID')->on('projects')->onDelete('cascade');
             $table->foreignId('userID')->references('id')->on('users')->onDelete('cascade');
             $table->string('fileName');
+            $table->string('description');
             $table->timestamps();
         });
     }
