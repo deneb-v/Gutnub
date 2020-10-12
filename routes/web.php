@@ -19,10 +19,13 @@ route::get('/auth/google', 'AccountController@redirectToGoogleAuth')->name('logi
 route::get('/auth/google/redirect', 'AccountController@googleAuthCallback')->name('googleCallback');
 route::get('logout', 'AccountController@logout')->name('logout');
 
+
+
 route::get('/home', 'UserController@homeView')->name('homeView');
 route::post('/createproject', 'UserController@addProject')->name('createProject');
 route::get('/project/{id}', 'UserController@projectView')->name('projectView');
+route::post('/project/{id}/addcollabolator', 'UserController@addColabolator')->name('addColllabolator');
+route::post('/project/{id}/uploadfile', 'UserController@uploadFile')->name('uploadFile');
 route::get('/test', 'GdriveController@test');
-
 
 Route::post('/project/upload', 'UserController@fileupload')->name('user.fileupload');

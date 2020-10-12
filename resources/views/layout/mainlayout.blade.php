@@ -149,6 +149,12 @@
   <script src="{{ asset('/js/bootstrap/js/bootstrap.bundle.js') }}"></script>
   <!-- Custom scripts for all pages-->
   <script src="{{ asset('/js/sb-admin-2.js') }}"></script>
+
+  <script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
 </body>
 
 </html>

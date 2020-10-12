@@ -80,13 +80,7 @@ class GdriveController extends Controller
 
         // 1HD-0o-OZouFNPofrfZUDbYR7M8Ddyhtg
 
-        // $permission = new Google_Service_Drive_Permission();
-        // $permission->setEmailAddress('galaxyrean@gmail.com');
-        // $permission->setRole('writer');
-        // $permission->settype('user');
-
-        // dd($this->drive);
-        // $testupd = $this->drive->permissions->create('1DdLo-01SlmRYPFAlRsm6c5h6XYmaDeHt',$permission);
+        //
 
         // $folder_meta = new Google_Service_Drive_DriveFile(array(
         //     'name' => 'woohooo',
@@ -121,8 +115,7 @@ class GdriveController extends Controller
             'uploadType' => 'multipart',
             'fields' => 'id'
         ]);
-
-        dd($file->id);
+        return $file->id;
     }
 
     function deleteFileOrFolder($id){
@@ -152,5 +145,14 @@ class GdriveController extends Controller
             'fields' => 'id'
         ));
         return $folder->id;
+    }
+
+    function addPermission($folderID, $email){
+        $permission = new Google_Service_Drive_Permission();
+        $permission->setEmailAddress($email);
+        $permission->setRole('writer');
+        $permission->settype('user');
+
+        $this->drive->permissions->create($folderID,$permission);
     }
 }
