@@ -20,6 +20,7 @@
   <!-- Custom styles for this template-->
   <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
   <link href="{{ asset('plugin/DataTables/datatables.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('plugin/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css') }}">
 
 </head>
 
@@ -179,11 +180,13 @@
   <!-- Custom scripts for all pages-->
   <script src="{{ asset('/js/sb-admin-2.js') }}"></script>
   <script src="{{ asset('plugin/DataTables/datatables.min.js') }}"></script>
+  <script src="{{ asset('/plugin/OwlCarousel2-2.3.4/dist/owl.carousel.min.js') }}"></script>
 
   <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+
   </script>
 
   @yield('script')
