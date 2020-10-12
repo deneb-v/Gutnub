@@ -55,6 +55,6 @@ class File extends Model
                 'f.created_at as created_at',
                 'f.description as description'
             ]);
-        return $history
+        return $history;
     }
 }

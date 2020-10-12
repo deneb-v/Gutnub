@@ -23,11 +23,14 @@ class UserController extends Controller
         $project = Project::getProject($id);
         $collabolator = Project_member::getProjectMember($id);
         $latestFile = File::getLatestFileDetail($id);
+        $history = File::getHistory($id);
 
         return view('project',['project'=>$project,
             'projectList'=>$projectList,
             'collabolator'=>$collabolator,
-            'latestFile'=>$latestFile]);
+            'latestFile'=>$latestFile,
+            'history' => $history
+            ]);
     }
 
     public function addProject(Request $req)

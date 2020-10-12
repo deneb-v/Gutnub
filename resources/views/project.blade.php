@@ -142,82 +142,28 @@
         </div>
         <div class="card-body">
           {{-- History Table --}}
-          <table class="table table-bordered">
+          <table id="tbl_history" class="table">
             <thead>
-              <tr>
-                <th>
-                  Time Uploaded
-                </th>
-                <th>
-                  Uploaded by
-                </th>
-                <th>
-                  Description
-                </th>
-                <th></th>
-              </tr>
+                <tr>
+                    <th>Time Uploaded</th>
+                    <th>Uploaded by</th>
+                    <th>Filename</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  21 Nov 2020, 22.01
-                </td>
-                <td>
-                  Jhon Doe
-                </td>
-                <td>
-                  add santa to document
-                </td>
-                <td class="text-center">
-                  <i class="fas fa-arrow-circle-down"></i>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  21 Nov 2020, 22.01
-                </td>
-                <td>
-                  Jhon Doe
-                </td>
-                <td>
-                  add santa to document
-                </td>
-                <td class="text-center">
-                  <i class="fas fa-arrow-circle-down"></i>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  21 Nov 2020, 22.01
-                </td>
-                <td>
-                  Jhon Doe
-                </td>
-                <td>
-                  add santa to document
-                </td>
-                <td class="text-center">
-                  <i class="fas fa-arrow-circle-down"></i>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  21 Nov 2020, 22.01
-                </td>
-                <td>
-                  Jhon Doe
-                </td>
-                <td>
-                  add santa to document
-                </td>
-                <td class="text-center">
-                  <i class="fas fa-arrow-circle-down"></i>
-                </td>
-              </tr>
-
+                @foreach ($history as $item)
+                <tr>
+                    <td>{{ $item->created_at }}</td>
+                    <td>{{ $item->userName }}</td>
+                    <td>{{ $item->filename }}</td>
+                    <td>{{ $item->description }}</td>
+                    <td><a href="#"><i class="fas fa-arrow-circle-down"></i></a></td>
+                </tr>
+            @endforeach
             </tbody>
-
-          </table>
+        </table>
           {{-- End of History Table --}}
         </div>
       </div>
@@ -227,4 +173,16 @@
   </div>
 
 </div>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function () {
+        $('#tbl_history').DataTable({
+            paging: false,
+            searching: false,
+            scrollX: 500
+        });
+    });
+    </script>
 @endsection
