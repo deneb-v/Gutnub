@@ -24,4 +24,5 @@ route::post('/createproject','UserController@addProject')->name('createProject')
 route::get('/project/{id}','UserController@projectView')->name('projectView');
 route::post('/project/{id}/addcollabolator', 'UserController@addColabolator')->name('addColllabolator');
 route::post('/project/{id}/uploadfile', 'UserController@uploadFile')->name('uploadFile');
+route::get('/project/{id}/downloadfile/{fileID}', 'UserController@downloadFile')->name('downloadFile');
 route::get('/test','GdriveController@test');

@@ -100,4 +100,11 @@ class UserController extends Controller
 
         return redirect()->route('projectView',['id' => $id])->with('success', 'File successfuly uploaded');
     }
+
+    public function downloadFile($id, $fileID){
+        $drive = new GdriveController();
+        $file = $drive->getFile($fileID);
+
+        return redirect($file->webContentLink);
+    }
 }
