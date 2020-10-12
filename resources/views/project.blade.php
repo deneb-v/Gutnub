@@ -1,6 +1,14 @@
 @extends('layout/mainlayout')
 
 @section('content')
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="{{asset('dropzone/dist/min/dropzone.min.css')}}">
+
+<!-- JS -->
+<script src="{{asset('dropzone/dist/min/dropzone.min.js')}}" type="text/javascript"></script>
+
+
+
 <div class="container-fluid">
   <h1>{{ $project->projectName }}</h1>
   <p>Due date: {{ $project->projectDueDate }}</p>
@@ -33,7 +41,7 @@
       <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h2 class="m-0 font-weight-bold text-primary">Latest Project File</h2>
-          <button class="btn btn-primary btn-sm">Upload File</button>
+          <button class="btn btn-primary btn-sm" data-toggle='modal' data-target="#modal_uploadfile">Upload File</button>
         </div>
         <div class="card-body">
           <p>
@@ -150,4 +158,53 @@
   </div>
 
 </div>
+
+
+{{-- Modal --}}
+<div class="modal fade" id="modal_uploadfile" tabindex="-1" aria-labelledby="modal_uploadfile" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Upload Project</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <form action="{{ route('user.fileupload') }}" class="dropzone" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{$project->projectID}}">
+                  {{-- {{ csrf_field() }} --}}
+                  {{-- <input type="file" name="file" id=""> --}}
+                  {{-- <div class="form-group">
+                      <label>Project name</label>
+                      <input type="text" class="form-control" id="txt_projectName" name="txt_projectName">
+                  </div>
+                  <div class="form-group">
+                      <label>Due date</label>
+                      <input type="datetime-local" class="form-control" id="txt_projectDate" name="txt_projectDate">
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">New project</button>
+                  </div> --}}
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+    <!-- Script -->
+    <script>
+      var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+  
+      Dropzone.autoDiscover = false;
+      var myDropzone = new Dropzone(".dropzone",{ 
+          maxFilesize: 3,  // 3 mb
+          acceptedFiles: ".jpeg,.jpg,.png,.pdf",
+      });
+      myDropzone.on("sending", function(file, xhr, formData) {
+         formData.append("_token", CSRF_TOKEN);
+      }); 
+      </script>
 @endsection

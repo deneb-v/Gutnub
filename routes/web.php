@@ -15,11 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'AccountController@loginView')->name('login');
 
-route::get('/auth/google','AccountController@redirectToGoogleAuth')->name('loginByGoogle');
-route::get('/auth/google/redirect','AccountController@googleAuthCallback')->name('googleCallback');
-route::get('logout','AccountController@logout')->name('logout');
+route::get('/auth/google', 'AccountController@redirectToGoogleAuth')->name('loginByGoogle');
+route::get('/auth/google/redirect', 'AccountController@googleAuthCallback')->name('googleCallback');
+route::get('logout', 'AccountController@logout')->name('logout');
 
-route::get('/home','UserController@homeView')->name('homeView');
-route::post('/createproject','UserController@addProject')->name('createProject');
-route::get('/project/{id}','UserController@projectView')->name('projectView');
-route::get('/test','GdriveController@test');
+route::get('/home', 'UserController@homeView')->name('homeView');
+route::post('/createproject', 'UserController@addProject')->name('createProject');
+route::get('/project/{id}', 'UserController@projectView')->name('projectView');
+route::get('/test', 'GdriveController@test');
+
+
+Route::post('/project/upload', 'UserController@fileupload')->name('user.fileupload');
