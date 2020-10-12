@@ -20,6 +20,7 @@
 
   <!-- Custom styles for this template-->
   <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
+  <link href="{{ asset('plugin/DataTables/datatables.min.css') }}" rel="stylesheet">
 
 </head>
 
@@ -150,12 +151,15 @@
   <script src="{{ asset('/js/bootstrap/js/bootstrap.bundle.js') }}"></script>
   <!-- Custom scripts for all pages-->
   <script src="{{ asset('/js/sb-admin-2.js') }}"></script>
+  <script src="{{ asset('plugin/DataTables/datatables.min.js') }}"></script>
 
   <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
   </script>
+
+  @yield('script')
 </body>
 
 </html>

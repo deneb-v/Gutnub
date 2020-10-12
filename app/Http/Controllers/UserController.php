@@ -23,13 +23,16 @@ class UserController extends Controller
         $project = Project::getProject($id);
         $collabolator = Project_member::getProjectMember($id);
         $latestFile = File::getLatestFileDetail($id);
+        $history = File::getHistory($id);
 
-        return view('project', [
-            'project' => $project,
-            'projectList' => $projectList,
-            'collabolator' => $collabolator,
-            'latestFile' => $latestFile
+
+        return view('project',['project'=>$project,
+            'projectList'=>$projectList,
+            'collabolator'=>$collabolator,
+            'latestFile'=>$latestFile,
+            'history' => $history
         ]);
+
     }
 
     public function addProject(Request $req)
@@ -120,5 +123,12 @@ class UserController extends Controller
         File::addFile($fileID, $id, Auth::user()->id, $req->file('file_upload')->getClientOriginalName(), $req->txt_description);
 
         return redirect()->route('projectView', ['id' => $id])->with('success', 'File successfuly uploaded');
+    }
+
+    public function downloadFile($id, $fileID){
+        $drive = new GdriveController();
+        $file = $drive->getFile($fileID);
+
+        return redirect($file->webContentLink);
     }
 }

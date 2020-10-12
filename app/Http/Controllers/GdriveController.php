@@ -74,31 +74,6 @@ class GdriveController extends Controller
         $this->createFile($storage_path);
     }
 
-    public function test(){
-        // $this->createFolder('gutnub not github');
-        // dd($this->drive->files);
-
-        // 1HD-0o-OZouFNPofrfZUDbYR7M8Ddyhtg
-
-        //
-
-        // $folder_meta = new Google_Service_Drive_DriveFile(array(
-        //     'name' => 'woohooo',
-        //     'mimeType' => 'application/vnd.google-apps.folder',));
-
-        // $folder_meta->setParents('1DdLo-01SlmRYPFAlRsm6c5h6XYmaDeHt');
-
-        // $this->createFile('test.txt','1DdLo-01SlmRYPFAlRsm6c5h6XYmaDeHt');
-        // $file = $this->drive->files->insert($folder_meta, [
-        //     'fields' => [
-        //         'id',
-        //         ]
-        // ]);
-        // $this->ListFolders('1DdLo-01SlmRYPFAlRsm6c5h6XYmaDeHt');
-        // $this->createFolder('');
-
-    }
-
     function createFile($file, $parent_id = null){
         $name = gettype($file) === 'object' ? $file->getClientOriginalName() : $file;
         $fileMetadata = new Google_Service_Drive_DriveFile([
@@ -154,5 +129,12 @@ class GdriveController extends Controller
         $permission->settype('user');
 
         $this->drive->permissions->create($folderID,$permission);
+    }
+
+    function getFile($fileID){
+        $file = $this->drive->files->get($fileID,array(
+            'fields' => ['webContentLink','name']
+        ));
+        return $file;
     }
 }
