@@ -33,7 +33,8 @@
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-        <div class="sidebar-brand-text mx-3">Gutnub </div>
+        <img class="container-fluid" src="{{asset('img/logo/Gutnub-logo-wborder.png')}}" alt="logo">
+        {{-- <div class="sidebar-brand-text mx-3">Gutnub </div> --}}
       </a>
 
       <!-- Divider -->
@@ -55,7 +56,7 @@
       </div>
 
       @forelse ($projectList as $item)
-        <li class="nav-item">
+      <li class="nav-item {{isset($project) && $project->projectID == $item->projectID ? 'active' : ''}}">
             <a class="nav-link pb-0" href="{{ route('projectView',['id' => $item->projectID]) }}">
                 <i class="far fa-file"></i>
                 <span>{{ $item->projectName }}</span>

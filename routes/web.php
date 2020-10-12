@@ -19,8 +19,6 @@ route::get('/auth/google', 'AccountController@redirectToGoogleAuth')->name('logi
 route::get('/auth/google/redirect', 'AccountController@googleAuthCallback')->name('googleCallback');
 route::get('logout', 'AccountController@logout')->name('logout');
 
-
-
 route::get('/home', 'UserController@homeView')->name('homeView');
 route::post('/createproject', 'UserController@addProject')->name('createProject');
 route::get('/project/{id}', 'UserController@projectView')->name('projectView');
