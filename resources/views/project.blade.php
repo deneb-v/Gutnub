@@ -27,32 +27,6 @@
             {{Session::get('error')}}
         </div>
     @endif
-    <div class="modal fade" id="modal_addColabolator" tabindex="-1" aria-labelledby="modal_addColabolator" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add colabolator</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('addColllabolator', ['id' => $project->projectID]) }}" method="POST" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" id="txt_projectName" name="txt_email">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Add</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
   <h1>{{ $project->projectName }}</h1>
   <p>Due date: {{ $project->projectDueDate }}</p>
 
@@ -91,21 +65,24 @@
           <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#model_upload">Upload File</button>
         </div>
         <div class="card-body">
-            @if ($latestFile!=null)
+
+            @if ($latestFile==null)
+                <p class="text-center">No file uploaded</p>
+            @else
                 <p>
                 Uploaded by: <b> {{ $latestFile->userName }} </b> <br>
                 Time: <b>{{ $latestFile->created_at }}</b><br>
                 Description: <b>{{ $latestFile->description }}</b> <br>
                 </p>
                 <div class="col-xl-12 col-md-12 mb-12">
-                  <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body d-flex flex-row justify-content-between">
-                      <span> <i class="fas fa-folder"></i>{{ $latestFile->filename }}</span>
-                      <a href="{{ route('downloadFile', ['id'=> $project->projectID, 'fileID'=>$latestFile->fileID]) }}">
+                        <span> <i class="fas fa-folder"></i>{{ $latestFile->filename }}</span>
+                        <a href="{{ route('downloadFile', ['id'=> $project->projectID, 'fileID'=>$latestFile->fileID]) }}">
                         <i class="fas fa-arrow-circle-down"></i>
-                      </a>
+                        </a>
                     </div>
-                  </div>
+                    </div>
                 </div>
             @endif
 
@@ -195,50 +172,64 @@
   </div>
 </div>
 
-{{-- Modal Upload File Select File --}}
-<div class="modal fade" id="model_upload" tabindex="-1" aria-labelledby="model_upload" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add colabolator</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <form action="{{ route('uploadFile', ['id' => $project->projectID]) }}" method="POST" enctype="multipart/form-data">
-                  {{ csrf_field() }}
-                  <div class="form-group">
-                      <label>File</label>
-                      <input type="file" class="form-control-file" id="file_upload" name="file_upload">
-                  </div>
-                  <div class="form-group">
-                      <label>File</label>
-                      <input type="text" class="form-control" id="txt_description" name="txt_description" required>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-primary">Upload</button>
-                  </div>
-              </form>
-          </div>
-      </div>
-  </div>
-</div>
+{{-- Modal Add Colaborator Select File --}}
+    <div class="modal fade" id="modal_addColabolator" tabindex="-1" aria-labelledby="modal_addColabolator" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add colabolator</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('addColllabolator', ['id' => $project->projectID]) }}" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" id="txt_projectName" name="txt_email">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Script -->
-    <script>
-      var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-  
-      Dropzone.autoDiscover = false;
-      var myDropzone = new Dropzone(".dropzone",{ 
-          maxFilesize: 3,  // 3 mb
-          acceptedFiles: ".jpeg,.jpg,.png,.pdf",
-      });
-      myDropzone.on("sending", function(file, xhr, formData) {
-         formData.append("_token", CSRF_TOKEN);
-      }); 
-      </script>
+    {{-- Modal upload  --}}
+    <div class="modal fade" id="model_upload" tabindex="-1" aria-labelledby="model_upload" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add colabolator</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('uploadFile', ['id' => $project->projectID]) }}" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label>File</label>
+                            <input type="file" class="form-control-file" id="file_upload" name="file_upload">
+                        </div>
+                        <div class="form-group">
+                            <label>File</label>
+                            <input type="text" class="form-control" id="txt_description" name="txt_description" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+
 @endsection
 
 @section('script')
@@ -251,4 +242,19 @@
         });
     });
     </script>
+
+
+    <!-- Script DropZone -->
+    <script>
+        var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+    
+        Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone(".dropzone",{ 
+            maxFilesize: 3,  // 3 mb
+            acceptedFiles: ".jpeg,.jpg,.png,.pdf",
+        });
+        myDropzone.on("sending", function(file, xhr, formData) {
+           formData.append("_token", CSRF_TOKEN);
+        }); 
+        </script>
 @endsection

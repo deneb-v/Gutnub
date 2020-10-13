@@ -8,273 +8,72 @@
     </div>
 
   <div class="row">
-    {{-- Ongoing Project --}}
-    @foreach ($projectList as $item)
-    <div class="col-xl-4 col-md-6 mb-4">
-      <div class="card border-left-primary shadow h-100 py-2">
-        <div class="card-body">
-          <div class="row no-gutters align-items-center">
-            <div class="col mr-2">
-            <div class="h5 font-weight-bold text-primary text-uppercase mb-1">{{$item->projectName}}</div>
-              <div class="row">
-              <div class="col-7 h6 mb-0 font-weight-bold text-gray-800">Due Date: <br>{{substr($item->projectDueDate ,0 ,10)}}</div>
-                <div class="col-5 h2">
-                {{round((strtotime($item->projectDueDate) - time())/ 86400) }}<span class="text-xs"> Days Left</span> 
-    
+    <div class="owl-carousel owl-theme">
+        @foreach ($projectList as $item)
+        <div class="item" style="width: 340px">
+          <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                <div class="h5 font-weight-bold text-primary text-uppercase mb-1">{{$item->projectName}}</div>
+                  <div class="row">
+                  <div class="col-7 h6 mb-0 font-weight-bold text-gray-800">Due Date: <br>{{substr($item->projectDueDate ,0 ,10)}}</div>
+                    <div class="col-5 h2">
+                    {{round((strtotime($item->projectDueDate) - time())/ 86400) }}<span class="text-xs"> Days Left</span>
+
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+        @endforeach
     </div>
-    @endforeach
+    {{-- Ongoing Project --}}
 
   </div>
 
   <div class="row">
     {{-- Left Side --}}
-    <div class="col-xl-6">
+    <div class="col-xl-12">
       {{-- latest upload --}}
       <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h2 class="m-0 font-weight-bold text-primary">Latest upload</h2>
+          <h2 class="m-0 font-weight-bold text-primary">Latest update</h2>
         </div>
         <div class="card-body">
           <div class="row">
-            <table class="table table-bordered">
+            <table id="tbl_latest" class="table">
                 <thead>
-                  <tr>
-                    <th>
-                      Time Uploaded
-                    </th>
-                    <th>
-                      Uploaded by
-                    </th>
-                    <th>
-                      Description
-                    </th>
-                    <th></th>
-                  </tr>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Time Uploaded</th>
+                        <th>Uploaded by</th>
+                        <th>Filename</th>
+                        <th>Description</th>
+                    </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      21 Nov 2020, 22.01
-                    </td>
-                    <td>
-                      Jhon Doe
-                    </td>
-                    <td>
-                      add santa to document
-                    </td>
-                    <td class="text-center">
-                      <i class="fas fa-arrow-circle-down"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      21 Nov 2020, 22.01
-                    </td>
-                    <td>
-                      Jhon Doe
-                    </td>
-                    <td>
-                      add santa to document
-                    </td>
-                    <td class="text-center">
-                      <i class="fas fa-arrow-circle-down"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      21 Nov 2020, 22.01
-                    </td>
-                    <td>
-                      Jhon Doe
-                    </td>
-                    <td>
-                      add santa to document
-                    </td>
-                    <td class="text-center">
-                      <i class="fas fa-arrow-circle-down"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      21 Nov 2020, 22.01
-                    </td>
-                    <td>
-                      Jhon Doe
-                    </td>
-                    <td>
-                      add santa to document
-                    </td>
-                    <td class="text-center">
-                      <i class="fas fa-arrow-circle-down"></i>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      21 Nov 2020, 22.01
-                    </td>
-                    <td>
-                      Jhon Doe
-                    </td>
-                    <td>
-                      add santa to document
-                    </td>
-                    <td class="text-center">
-                      <i class="fas fa-arrow-circle-down"></i>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      21 Nov 2020, 22.01
-                    </td>
-                    <td>
-                      Jhon Doe
-                    </td>
-                    <td>
-                      add santa to document
-                    </td>
-                    <td class="text-center">
-                      <i class="fas fa-arrow-circle-down"></i>
-                    </td>
-                  </tr>
+                    @foreach ($latestUpdate as $item)
+                    <tr>
+                        <td>{{ $item->projectName }}</td>
+                        <td>{{ $item->updated_at }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->fileName }}</td>
+                        <td>{{ $item->description }}</td>
+                    </tr>
+                    @endforeach
                 </tbody>
-
-              </table>
+            </table>
           </div>
         </div>
       </div>
     </div>
     {{-- End of Left Side --}}
 
-    <div class="col-xl-6">
-        {{-- latest upload --}}
-        <div class="card shadow mb-4">
-          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h2 class="m-0 font-weight-bold text-primary">Notification</h2>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>
-                        Time Uploaded
-                      </th>
-                      <th>
-                        Uploaded by
-                      </th>
-                      <th>
-                        Description
-                      </th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        21 Nov 2020, 22.01
-                      </td>
-                      <td>
-                        Jhon Doe
-                      </td>
-                      <td>
-                        add santa to document
-                      </td>
-                      <td class="text-center">
-                        <i class="fas fa-arrow-circle-down"></i>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        21 Nov 2020, 22.01
-                      </td>
-                      <td>
-                        Jhon Doe
-                      </td>
-                      <td>
-                        add santa to document
-                      </td>
-                      <td class="text-center">
-                        <i class="fas fa-arrow-circle-down"></i>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        21 Nov 2020, 22.01
-                      </td>
-                      <td>
-                        Jhon Doe
-                      </td>
-                      <td>
-                        add santa to document
-                      </td>
-                      <td class="text-center">
-                        <i class="fas fa-arrow-circle-down"></i>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        21 Nov 2020, 22.01
-                      </td>
-                      <td>
-                        Jhon Doe
-                      </td>
-                      <td>
-                        add santa to document
-                      </td>
-                      <td class="text-center">
-                        <i class="fas fa-arrow-circle-down"></i>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        21 Nov 2020, 22.01
-                      </td>
-                      <td>
-                        Jhon Doe
-                      </td>
-                      <td>
-                        add santa to document
-                      </td>
-                      <td class="text-center">
-                        <i class="fas fa-arrow-circle-down"></i>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td>
-                        21 Nov 2020, 22.01
-                      </td>
-                      <td>
-                        Jhon Doe
-                      </td>
-                      <td>
-                        add santa to document
-                      </td>
-                      <td class="text-center">
-                        <i class="fas fa-arrow-circle-down"></i>
-                      </td>
-                    </tr>
-                  </tbody>
-
-                </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
+  </div>
 </div>
-
 {{-- Modal --}}
 <div class="modal fade" id="modal_newproject" tabindex="-1" aria-labelledby="modal_newproject" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -305,4 +104,37 @@
       </div>
   </div>
 </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $(".owl-carousel").owlCarousel({
+                items: 3,
+                margin: 0,
+                loop: false,
+                autowidth: true,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                rewind: true,
+                responsive: {
+                    1000:{
+                        items: 3
+                    },
+                    600: {
+                        items: 2,
+                    },
+                    500:{
+                        items: 1,
+                    }
+                }
+            });
+
+            $('#tbl_latest').DataTable({
+                paging: false,
+                searching: false,
+            });
+        });
+
+      </script>
 @endsection
