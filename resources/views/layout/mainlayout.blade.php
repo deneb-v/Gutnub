@@ -35,7 +35,7 @@
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-        <img class="container-fluid" src="{{asset('img/logo/Gutnub-logo-wborder.png')}}" alt="logo">
+        <img class="container-fluid" src="{{asset('img/logo/Gutnub-logo.png')}}" alt="logo">
         {{-- <div class="sidebar-brand-text mx-3">Gutnub </div> --}}
       </a>
 
