@@ -27,6 +27,7 @@
             {{Session::get('error')}}
         </div>
     @endif
+
   <h1>{{ $project->projectName }}</h1>
   <p>Due date: {{ $project->projectDueDate }}</p>
 
@@ -172,7 +173,7 @@
   </div>
 </div>
 
-{{-- Modal Add Colaborator Select File --}}
+{{-- Modal Add Colaborator--}}
     <div class="modal fade" id="modal_addColabolator" tabindex="-1" aria-labelledby="modal_addColabolator" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
