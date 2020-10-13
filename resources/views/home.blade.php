@@ -73,6 +73,7 @@
     {{-- End of Left Side --}}
 
   </div>
+
 </div>
 {{-- Modal --}}
 <div class="modal fade" id="modal_newproject" tabindex="-1" aria-labelledby="modal_newproject" aria-hidden="true">
@@ -137,4 +138,5 @@
         });
 
       </script>
+
 @endsection
