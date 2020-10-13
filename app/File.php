@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 class File extends Model
 {
-    protected $table='files';
-    protected $primarykey='fileID';
-    protected $fillable=[
+    protected $table = 'files';
+    protected $primarykey = 'fileID';
+    protected $fillable = [
         'fileID',
         'projectID',
         'userID',
@@ -17,7 +17,8 @@ class File extends Model
         'description'
     ];
 
-    static public function addFile($fileID, $projectID, $userID, $filename, $description){
+    static public function addFile($fileID, $projectID, $userID, $filename, $description)
+    {
         File::create([
             'fileID' => $fileID,
             'projectID' => $projectID,
@@ -27,10 +28,11 @@ class File extends Model
         ]);
     }
 
-    static public function getLatestFileDetail($projectID){
+    static public function getLatestFileDetail($projectID)
+    {
         $fileDetail = DB::table('files as f')
-            ->join('users as u','f.userID','=','u.id')
-            ->where('f.projectID','=',$projectID)
+            ->join('users as u', 'f.userID', '=', 'u.id')
+            ->where('f.projectID', '=', $projectID)
             ->orderBy('created_at', 'desc')
             ->get([
                 'f.fileID as fileID',
@@ -43,10 +45,11 @@ class File extends Model
         return $fileDetail;
     }
 
-    static public function getHistory($projectID){
+    static public function getHistory($projectID)
+    {
         $history = DB::table('files as f')
-            ->join('users as u','f.userID','=','u.id')
-            ->where('f.projectID','=',$projectID)
+            ->join('users as u', 'f.userID', '=', 'u.id')
+            ->where('f.projectID', '=', $projectID)
             ->orderBy('created_at', 'desc')
             ->get([
                 'f.fileID as fileID',

@@ -27,12 +27,14 @@ class UserController extends Controller
         $latestFile = File::getLatestFileDetail($id);
         $history = File::getHistory($id);
 
+
         return view('project',['project'=>$project,
             'projectList'=>$projectList,
             'collabolator'=>$collabolator,
             'latestFile'=>$latestFile,
             'history' => $history
-            ]);
+        ]);
+
     }
 
     public function addProject(Request $req)
@@ -62,6 +64,27 @@ class UserController extends Controller
         return redirect()->route('projectView', ['id' => $folderID]);
     }
 
+    public function fileupload(Request $req)
+    {
+        if ($req->hasFile('file')) {
+
+            $destinationpath = 'files/' . $req->input('id');
+
+            if (!file_exists($destinationpath)) {
+                mkdir($destinationpath, 0755, true);
+            }
+
+            $extension = $req->file('file')->getClientOriginalExtension();
+
+            // $validextensions = array('zip', '7z');
+
+            // if (in_array(strtolower($extension), $validextensions)) {
+            $fileName = $req->file('file')->getClientOriginalName() . time() . '.' . $extension;
+
+            $req->file('file')->move($destinationpath, $fileName);
+            // }
+        }
+    }
     public function addColabolator(Request $req, $id)
     {
         $rules = [
@@ -94,13 +117,14 @@ class UserController extends Controller
         return redirect()->route('projectView', ['id' => $id])->with('success', $user->name . ' successfully added');
     }
 
-    public function uploadFile(Request $req, $id){
+    public function uploadFile(Request $req, $id)
+    {
         $drive = new GdriveController();
 
         $fileID = $drive->createFile($req->file('file_upload'), $id);
         File::addFile($fileID, $id, Auth::user()->id, $req->file('file_upload')->getClientOriginalName(), $req->txt_description);
 
-        return redirect()->route('projectView',['id' => $id])->with('success', 'File successfuly uploaded');
+        return redirect()->route('projectView', ['id' => $id])->with('success', 'File successfuly uploaded');
     }
 
     public function downloadFile($id, $fileID){

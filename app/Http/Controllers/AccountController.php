@@ -9,20 +9,23 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AccountController extends Controller
 {
-    public function loginView(){
+    public function loginView()
+    {
         return view('login');
     }
 
-    public function redirectToGoogleAuth(){
+    public function redirectToGoogleAuth()
+    {
         $parameters = ['access_type' => 'offline'];
         return Socialite::driver('google')->scopes(["https://www.googleapis.com/auth/drive"])->with($parameters)->redirect();
     }
 
-    public function googleAuthCallback(){
+    public function googleAuthCallback()
+    {
         $google_user = Socialite::driver('google')->user();
         // dd($google_user);
         $user = User::findUser($google_user->getEmail());
-        if($user==null){
+        if ($user == null) {
             $name = $google_user->getName();
             $email = $google_user->getEmail();
             $profilePicture = $google_user->getAvatar();
@@ -39,7 +42,8 @@ class AccountController extends Controller
         return redirect()->route('homeView');
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('login');
     }

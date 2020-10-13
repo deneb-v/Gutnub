@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>Gutnub</title>
 
@@ -34,7 +35,8 @@
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-        <div class="sidebar-brand-text mx-3">Gutnub </div>
+        <img class="container-fluid" src="{{asset('img/logo/Gutnub-logo-wborder.png')}}" alt="logo">
+        {{-- <div class="sidebar-brand-text mx-3">Gutnub </div> --}}
       </a>
 
       <!-- Divider -->
@@ -56,7 +58,7 @@
       </div>
 
       @forelse ($projectList as $item)
-        <li class="nav-item">
+      <li class="nav-item {{isset($project) && $project->projectID == $item->projectID ? 'active' : ''}}">
             <a class="nav-link pb-0" href="{{ route('projectView',['id' => $item->projectID]) }}">
                 <i class="far fa-file"></i>
                 <span>{{ $item->projectName }}</span>
@@ -80,35 +82,6 @@
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
-        <div class="modal fade" id="modal_newproject" tabindex="-1" aria-labelledby="modal_newproject" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New project</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('createProject') }}" method="POST" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <label>Project name</label>
-                                <input type="text" class="form-control" id="txt_projectName" name="txt_projectName">
-                            </div>
-                            <div class="form-group">
-                                <label>Due date</label>
-                                <input type="datetime-local" class="form-control" id="txt_projectDate" name="txt_projectDate">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">New project</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">

@@ -15,14 +15,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'AccountController@loginView')->name('login');
 
-route::get('/auth/google','AccountController@redirectToGoogleAuth')->name('loginByGoogle');
-route::get('/auth/google/redirect','AccountController@googleAuthCallback')->name('googleCallback');
-route::get('logout','AccountController@logout')->name('logout');
+route::get('/auth/google', 'AccountController@redirectToGoogleAuth')->name('loginByGoogle');
+route::get('/auth/google/redirect', 'AccountController@googleAuthCallback')->name('googleCallback');
+route::get('logout', 'AccountController@logout')->name('logout');
 
-route::get('/home','UserController@homeView')->name('homeView');
-route::post('/createproject','UserController@addProject')->name('createProject');
-route::get('/project/{id}','UserController@projectView')->name('projectView');
+route::get('/home', 'UserController@homeView')->name('homeView');
+route::post('/createproject', 'UserController@addProject')->name('createProject');
+route::get('/project/{id}', 'UserController@projectView')->name('projectView');
 route::post('/project/{id}/addcollabolator', 'UserController@addColabolator')->name('addColllabolator');
 route::post('/project/{id}/uploadfile', 'UserController@uploadFile')->name('uploadFile');
+
 route::get('/project/{id}/downloadfile/{fileID}', 'UserController@downloadFile')->name('downloadFile');
 route::get('/test','GdriveController@test');
+
+// Perlu buat DropZone (AJAX nya kyknya)
+Route::post('/project/upload', 'UserController@fileupload')->name('user.fileupload');
+
