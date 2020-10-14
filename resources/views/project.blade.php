@@ -61,7 +61,7 @@
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h2 class="m-0 font-weight-bold text-primary">Latest Project File</h2>
           {{-- DropZone --}}
-          <button class="btn btn-primary btn-sm" data-toggle='modal' data-target="#modal_uploadfile">Upload File</button>
+          {{-- <button class="btn btn-primary btn-sm" data-toggle='modal' data-target="#modal_uploadfile">Upload File</button> --}}
           {{-- Select File --}}
           <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#model_upload">Upload File</button>
         </div>
@@ -78,7 +78,7 @@
                 <div class="col-xl-12 col-md-12 mb-12">
                     <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body d-flex flex-row justify-content-between">
-                        <span> <i class="fas fa-folder"></i>{{ $latestFile->filename }}</span>
+                        <span> <i class="fas fa-folder mr-1"></i>{{ $latestFile->filename }}</span>
                         <a href="{{ route('downloadFile', ['id'=> $project->projectID, 'fileID'=>$latestFile->fileID]) }}">
                         <i class="fas fa-arrow-circle-down"></i>
                         </a>
@@ -153,20 +153,6 @@
           <div class="modal-body">
               <form action="{{ route('user.fileupload') }}" class="dropzone" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="{{$project->projectID}}">
-                  {{-- {{ csrf_field() }} --}}
-                  {{-- <input type="file" name="file" id=""> --}}
-                  {{-- <div class="form-group">
-                      <label>Project name</label>
-                      <input type="text" class="form-control" id="txt_projectName" name="txt_projectName">
-                  </div>
-                  <div class="form-group">
-                      <label>Due date</label>
-                      <input type="datetime-local" class="form-control" id="txt_projectDate" name="txt_projectDate">
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-primary">New project</button>
-                  </div> --}}
               </form>
           </div>
       </div>
@@ -205,7 +191,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add colabolator</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Upload file</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -218,7 +204,7 @@
                             <input type="file" class="form-control-file" id="file_upload" name="file_upload">
                         </div>
                         <div class="form-group">
-                            <label>File</label>
+                            <label>Description</label>
                             <input type="text" class="form-control" id="txt_description" name="txt_description" required>
                         </div>
                         <div class="modal-footer">
@@ -242,20 +228,17 @@
             scrollX: 500
         });
     });
-    </script>
 
+    // <!-- Script DropZone -->
+    var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
-    <!-- Script DropZone -->
-    <script>
-        var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-    
-        Dropzone.autoDiscover = false;
-        var myDropzone = new Dropzone(".dropzone",{ 
-            maxFilesize: 3,  // 3 mb
-            acceptedFiles: ".jpeg,.jpg,.png,.pdf",
-        });
-        myDropzone.on("sending", function(file, xhr, formData) {
-           formData.append("_token", CSRF_TOKEN);
-        }); 
-        </script>
+    Dropzone.autoDiscover = false;
+    var myDropzone = new Dropzone(".dropzone",{
+        maxFilesize: 3,  // 3 mb
+        acceptedFiles: ".jpeg,.jpg,.png,.pdf",
+    });
+    myDropzone.on("sending", function(file, xhr, formData) {
+        formData.append("_token", CSRF_TOKEN);
+    });
+</script>
 @endsection

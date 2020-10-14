@@ -34,8 +34,8 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-        <img class="container-fluid" src="{{asset('img/logo/Gutnub-logo-wborder.png')}}" alt="logo">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center overflow-hidden" href="/">
+        <img src="{{asset('img/logo/Gutnub-logo-wborder.png')}}" alt="logo" width="135">
         {{-- <div class="sidebar-brand-text mx-3">Gutnub </div> --}}
       </a>
 

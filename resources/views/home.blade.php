@@ -7,7 +7,7 @@
         <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#modal_newproject">New project</button>
     </div>
 
-  <div class="row">
+  <div class="row mb-3 ml-1">
     <div class="owl-carousel owl-theme">
         @foreach ($projectList as $item)
         <div class="item" style="width: 340px">
