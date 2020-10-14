@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class UserMiddleware
+class LoggedMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,10 @@ class UserMiddleware
      */
     public function handle($request, Closure $next)
     {
-        // dd(Auth::check());
-        if(!Auth::check()){
-            return redirect()->route('login');
+        if(Auth::check()){
+            return redirect()->route('homeView');
         }
+
         return $next($request);
     }
 }
