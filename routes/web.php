@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['middleware' => 'user'], function () {
-    route::get('/home', 'UserController@homeView')->name('homeView');
+    route::get('/', 'UserController@homeView')->name('homeView');
     route::post('/createproject', 'UserController@addProject')->name('createProject');
     route::get('logout', 'AccountController@logout')->name('logout');
 
