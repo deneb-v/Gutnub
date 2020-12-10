@@ -13,11 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'AccountController@loginView')->name('login');
+
 
 Route::group(['middleware' => 'user'], function () {
-    route::get('/home', 'UserController@homeView')->name('homeView');
+    route::get('/', 'UserController@homeView')->name('homeView');
     route::post('/createproject', 'UserController@addProject')->name('createProject');
+    route::get('logout', 'AccountController@logout')->name('logout');
 
     Route::group(['prefix' => 'project'], function () {
         route::get('/{id}', 'UserController@projectView')->name('projectView');
@@ -29,9 +30,12 @@ Route::group(['middleware' => 'user'], function () {
     });
 });
 
-route::get('/auth/google', 'AccountController@redirectToGoogleAuth')->name('loginByGoogle');
-route::get('/auth/google/redirect', 'AccountController@googleAuthCallback')->name('googleCallback');
-route::get('logout', 'AccountController@logout')->name('logout');
+Route::group(['middleware' => 'logged'], function () {
+    route::get('/auth/google', 'AccountController@redirectToGoogleAuth')->name('loginByGoogle');
+    route::get('/auth/google/redirect', 'AccountController@googleAuthCallback')->name('googleCallback');
+    Route::get('/login', 'AccountController@loginView')->name('login');
+});
+
 
 
 
