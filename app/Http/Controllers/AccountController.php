@@ -24,6 +24,7 @@ class AccountController extends Controller
     {
         $google_user = Socialite::driver('google')->user();
         $user = User::findUser($google_user->getEmail());
+        dump($google_user);
         dump($user);
         if ($user == null) {
             $name = $google_user->getName();
