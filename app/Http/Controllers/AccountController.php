@@ -17,14 +17,15 @@ class AccountController extends Controller
     public function redirectToGoogleAuth()
     {
         $parameters = ['access_type' => 'offline'];
-        return Socialite::driver('google')->scopes(["https://www.googleapis.com/auth/drive"])->with($parameters)->redirect();
+        // return Socialite::driver('google')->scopes(["https://www.googleapis.com/auth/drive"])->with($parameters)->redirect();
+        return Socialite::driver('google')->with($parameters)->redirect();
     }
 
     public function googleAuthCallback()
     {
         $google_user = Socialite::driver('google')->user();
+        dd($google_user);
         $user = User::findUser($google_user->getEmail());
-        dump($google_user);
         dump($user);
         if ($user == null) {
             $name = $google_user->getName();
