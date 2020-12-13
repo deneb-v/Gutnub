@@ -24,9 +24,7 @@ class AccountController extends Controller
     public function googleAuthCallback()
     {
         $google_user = Socialite::driver('google')->user();
-        dd($google_user);
         $user = User::findUser($google_user->getEmail());
-        dump($user);
         if ($user == null) {
             $name = $google_user->getName();
             $email = $google_user->getEmail();
