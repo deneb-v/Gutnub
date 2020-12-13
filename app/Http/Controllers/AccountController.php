@@ -16,21 +16,21 @@ class AccountController extends Controller
 
     public function redirectToGoogleAuth()
     {
-        $parameters = ['access_type' => 'offline'];
+        $parameters = ['access_type' => 'online'];
         return Socialite::driver('google')->scopes(["https://www.googleapis.com/auth/drive"])->with($parameters)->redirect();
     }
 
     public function googleAuthCallback()
     {
         $google_user = Socialite::driver('google')->user();
-        dd($google_user);
         $user = User::findUser($google_user->getEmail());
+        dump($user);
         if ($user == null) {
             $name = $google_user->getName();
             $email = $google_user->getEmail();
             $profilePicture = $google_user->getAvatar();
             $refresh_token = $google_user->refreshToken;
-
+            // dump()
             $drive = new GdriveController($refresh_token);
             $gutnubFolderID = $drive->createFolder('Gutnub');
 
