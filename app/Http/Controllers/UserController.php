@@ -171,7 +171,8 @@ class UserController extends Controller
         $user = Auth::user();
 
         // dd(File::where('projectID', '1B0455EPen4KXUZJXj19KQw8D4oe_Slei')->orderBy('created_at', 'DESC')->first());
-        dd(Project::where('projectID','1B0455EPen4KXUZJXj19KQw8D4oe_Slei')->first()->file->sortByDesc('created_at')->first());
+        // dd(Project::where('projectID','1B0455EPen4KXUZJXj19KQw8D4oe_Slei')->first()->file->sortByDesc('created_at')->first());
         // dd(Auth::user()->projectMember);
+        // dd(Auth::user()->projectMember[0]->project->file);
     }
 }

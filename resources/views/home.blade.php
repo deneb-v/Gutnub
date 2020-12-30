@@ -10,7 +10,7 @@
 
         <div class="row mb-3 ml-1">
             <div class="owl-carousel owl-theme">
-                @foreach ($projectList as $item)
+                @foreach ($projectList->sortBy(fn($p, $key) => $p->project->projectDueDate) as $item)
                     <div class="item" style="width: 340px">
                         <div class="card border-left-primary shadow h-100 py-2">
                             <div class="card-body">
@@ -45,7 +45,7 @@
             {{-- Left Side --}}
             <div class="col-xl-12">
                 {{-- latest upload --}}
-                <div class="card shadow mb-4">
+                {{-- <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h2 class="m-0 font-weight-bold text-primary">Latest update</h2>
                     </div>
@@ -65,11 +65,45 @@
                                     @foreach ($latestUpdate as $item)
                                         <tr>
                                             <td>{{ $item->projectName }}</td>
-                                            <td>{{ $item->updated_at }}</td>
+                                            <td>{{ $item->created_at }}</td>
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->fileName }}</td>
                                             <td>{{ $item->description }}</td>
                                         </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> --}}
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h2 class="m-0 font-weight-bold text-primary">Latest update</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <table id="tbl_latest" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Project Name</th>
+                                        <th>Time Uploaded</th>
+                                        <th>Uploaded by</th>
+                                        <th>Filename</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($projectList as $item)
+                                        @foreach ($item->project->file->sortByDesc('created_at') as $file)
+                                            <tr>
+                                                <td>{{ $item->project->projectName }}</td>
+                                                <td>{{ $file->created_at }}</td>
+                                                <td>{{ $file->user->name }}</td>
+                                                <td>{{ $file->fileName }}</td>
+                                                <td>{{ $file->description }}</td>
+                                            </tr>
+                                        @endforeach
                                     @endforeach
                                 </tbody>
                             </table>
