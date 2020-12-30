@@ -14,6 +14,14 @@ class Project_member extends Model
         'role'
     ];
 
+    public function user(){
+        return $this->belongsTo('App\User', 'userID');
+    }
+
+    public function project(){
+        return $this->belongsTo('App\Project', 'projectID', 'projectID');
+    }
+
     static public function addProjectMember($projectID, $userID, $role){
         Project_member::create([
             'projectID' => $projectID,

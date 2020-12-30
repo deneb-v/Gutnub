@@ -13,9 +13,17 @@ class File extends Model
         'fileID',
         'projectID',
         'userID',
-        'filename',
+        'fileName',
         'description'
     ];
+
+    public function user(){
+        return $this->belongsTo('App\User', 'userID');
+    }
+
+    public function project(){
+        return $this->belongsTo('App\Project', 'projectID', 'projectID');
+    }
 
     static public function addFile($fileID, $projectID, $userID, $filename, $description)
     {

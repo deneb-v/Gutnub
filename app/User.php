@@ -28,6 +28,14 @@ class User extends Authenticatable
         'refresh_token',
     ];
 
+    public function file(){
+        return $this->hasMany('App\File', 'userID');
+    }
+
+    public function projectMember(){
+        return $this->hasMany('App\Project_member', 'userID');
+    }
+
     static public function findUser($email){
         return User::where('email',$email)->first();
     }

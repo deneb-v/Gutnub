@@ -24,7 +24,7 @@ class AccountController extends Controller
     public function googleAuthCallback()
     {
         $google_user = Socialite::driver('google')->user();
-        $user = User::findUser($google_user->getEmail());
+        $user = User::where('email',$google_user->getEmail())->first();
         if ($user == null) {
             $name = $google_user->getName();
             $email = $google_user->getEmail();
@@ -34,11 +34,17 @@ class AccountController extends Controller
             $drive = new GdriveController($refresh_token);
             $gutnubFolderID = $drive->createFolder('Gutnub');
 
-            $user = User::addGoogleUser($name, $email, $gutnubFolderID, $profilePicture, $refresh_token);
+            // $user = User::addGoogleUser($name, $email, $gutnubFolderID, $profilePicture, $refresh_token);
+
+            $user = new User();
+            $user->name = $name;
+            $user->email = $email;
+            $user->gutnubFolderID = $gutnubFolderID;
+            $user->profilePicture = $profilePicture;
+            $user->refresh_token = $refresh_token;
+            $user->save();
         }
         Auth::login($user);
-        // dd(Auth::user());
-
         return redirect()->route('homeView');
     }
 
