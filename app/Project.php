@@ -14,6 +14,7 @@ class Project extends Model
         'projectName',
         'projectDueDate'
     ];
+    public $incrementing = false;
 
     public function projectMember(){
         return $this->hasMany('App\Project_member', 'projectID', 'projectID');
