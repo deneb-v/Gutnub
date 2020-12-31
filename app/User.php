@@ -35,20 +35,4 @@ class User extends Authenticatable
     public function projectMember(){
         return $this->hasMany('App\Project_member', 'userID');
     }
-
-    static public function findUser($email){
-        return User::where('email',$email)->first();
-    }
-
-    static public function addGoogleUser($name, $email, $gutnubFolderID, $profilePicture, $refresh_token){
-        return User::create([
-            'name' => $name,
-            'email' => $email,
-            'gutnubFolderID' => $gutnubFolderID,
-            'profilePicture' => $profilePicture,
-            'refresh_token' => $refresh_token
-        ]);
-    }
-
-
 }

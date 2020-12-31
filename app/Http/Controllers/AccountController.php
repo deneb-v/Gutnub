@@ -34,8 +34,6 @@ class AccountController extends Controller
             $drive = new GdriveController($refresh_token);
             $gutnubFolderID = $drive->createFolder('Gutnub');
 
-            // $user = User::addGoogleUser($name, $email, $gutnubFolderID, $profilePicture, $refresh_token);
-
             $user = new User();
             $user->name = $name;
             $user->email = $email;

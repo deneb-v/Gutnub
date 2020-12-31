@@ -13,7 +13,6 @@ class UserController extends Controller
 {
     public function homeView()
     {
-        // $projectList = Project::getProjectListbyUser(Auth::user()->id);
         $latestUpdate = Project::getProjectUpdate(Auth::user()->id);
 
         $projectList = Auth::user()->projectMember;
@@ -23,12 +22,6 @@ class UserController extends Controller
 
     public function projectView($id)
     {
-        // $projectList = Project::getProjectNameListbyUser(Auth::user()->id);
-        // $project = Project::getProject($id);
-        // $collabolator = Project_member::getProjectMember($id);
-        // $latestFile = File::getLatestFileDetail($id);
-        // $history = File::getHistory($id);
-
         $projectList = Auth::user()->projectMember;
         $project = Project::where('projectID',$id)->first();
         $collabolator = $project->projectMember;
@@ -65,13 +58,11 @@ class UserController extends Controller
         $drive = new GdriveController();
         $folderID = $drive->createFolderIn(Auth::user()->gutnubFolderID, $projectName);
 
-        // Project::addProject($folderID, $projectName, $dueDate);
         $project = new Project();
         $project->projectID = $folderID;
         $project->projectName = $projectName;
         $project->projectDueDate = $dueDate;
 
-        // Project_member::addProjectMember($folderID, Auth::user()->id, 'owner');
         $project_member = new Project_member();
         $project_member->projectID = $folderID;
         $project_member->userID = Auth::user()->id;
@@ -132,7 +123,7 @@ class UserController extends Controller
         }
 
         $drive->addPermission($id, $email);
-        // Project_member::addProjectMember($id, $user->id, 'member');
+
         $project_member = new Project_member();
         $project_member->projectID = $id;
         $project_member->userID = $user->id;
@@ -146,7 +137,6 @@ class UserController extends Controller
         $drive = new GdriveController();
 
         $fileID = $drive->createFile($req->file('file_upload'), $id);
-        // File::addFile($fileID, $id, Auth::user()->id, $req->file('file_upload')->getClientOriginalName(), $req->txt_description);
 
         $file = new File();
         $file->fileID = $fileID;
