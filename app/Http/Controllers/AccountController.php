@@ -16,7 +16,7 @@ class AccountController extends Controller
 
     public function redirectToGoogleAuth()
     {
-        $parameters = ['access_type' => 'offline', "prompt" => "consent select_account"];
+        $parameters = ['access_type' => 'offline', "prompt" => "select_account"];
         return Socialite::driver('google')->scopes(["https://www.googleapis.com/auth/drive"])->with($parameters)->redirect();
         // return Socialite::driver('google')->with($parameters)->redirect();
     }
