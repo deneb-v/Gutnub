@@ -13,11 +13,9 @@ class UserController extends Controller
 {
     public function homeView()
     {
-        $latestUpdate = Project::getProjectUpdate(Auth::user()->id);
-
         $projectList = Auth::user()->projectMember;
 
-        return view('home', ['projectList' => $projectList, 'latestUpdate' => $latestUpdate]);
+        return view('home', ['projectList' => $projectList]);
     }
 
     public function projectView($id)

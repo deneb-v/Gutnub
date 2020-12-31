@@ -52,38 +52,6 @@
             {{-- Left Side --}}
             <div class="col-xl-12">
                 {{-- latest upload --}}
-                {{-- <div class="card shadow mb-4">
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h2 class="m-0 font-weight-bold text-primary">Latest update</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <table id="tbl_latest" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Project Name</th>
-                                        <th>Time Uploaded</th>
-                                        <th>Uploaded by</th>
-                                        <th>Filename</th>
-                                        <th>Description</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($latestUpdate as $item)
-                                        <tr>
-                                            <td>{{ $item->projectName }}</td>
-                                            <td>{{ $item->created_at }}</td>
-                                            <td>{{ $item->name }}</td>
-                                            <td>{{ $item->fileName }}</td>
-                                            <td>{{ $item->description }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div> --}}
-
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h2 class="m-0 font-weight-bold text-primary">Latest update</h2>
