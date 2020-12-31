@@ -24,6 +24,7 @@ Route::group(['middleware' => 'user'], function () {
         route::get('/{id}', 'UserController@projectView')->name('projectView');
         route::post('/{id}/addcollabolator', 'UserController@addColabolator')->name('addColllabolator');
         route::post('/{id}/uploadfile', 'UserController@uploadFile')->name('uploadFile');
+        route::post('/{id}/editproject', 'UserController@editproject')->name('editproject');
         route::get('/{id}/downloadfile/{fileID}', 'UserController@downloadFile')->name('downloadFile');
         // Perlu buat DropZone (AJAX nya kyknya)
         Route::post('/upload', 'UserController@fileupload')->name('user.fileupload');

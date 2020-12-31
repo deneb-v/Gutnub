@@ -10,7 +10,7 @@
 
         <div class="row mb-3 ml-1">
             <div class="owl-carousel owl-theme">
-                @foreach ($projectList->sortBy(fn($p, $key) => $p->project->projectDueDate) as $item)
+                @foreach ($projectList->sortBy(fn($p, $key) => $p->project->remainingTime()['second']) as $item)
                     <div class="item" style="width: 340px">
                         <div class="card border-left-primary shadow h-100 py-2">
                             <div class="card-body">
@@ -25,9 +25,16 @@
                                                 <br>{{ substr($item->project->projectDueDate, 0, 10) }}
                                             </div>
                                             <div class="col-5 h2">
-                                                {{ round((strtotime($item->project->projectDueDate) - time()) / 86400) }}<span
-                                                    class="text-xs"> Days Left</span>
-
+                                                @if ($item->project->remainingTime()['unit'] != null)
+                                                    {{ $item->project->remainingTime()['time'] }}<span class="text-xs">
+                                                        {{ $item->project->remainingTime()['unit'] }}
+                                                        Left</span>
+                                                @else
+                                                    --
+                                                    <span class="text-xs">
+                                                        Left
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

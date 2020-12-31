@@ -28,7 +28,12 @@
             </div>
         @endif
 
-        <h1>{{ $project->projectName }}</h1>
+        <div class="d-flex flex-row align-items-center">
+            <h1>{{ $project->projectName }}</h1>
+            <a class="pl-3" href="#" data-toggle="modal" data-target="#modal_editproject">
+                <i class="fas fa-cog"></i>
+            </a>
+        </div>
         <p>Due date: {{ $project->projectDueDate }}</p>
 
         <div class="row">
@@ -227,6 +232,39 @@
         </div>
     </div>
 
+    {{-- Modal edit project --}}
+    <div class="modal fade" id="modal_editproject" tabindex="-1" aria-labelledby="modal_editproject" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit project</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('editproject', ['id' => $project->projectID]) }}" method="POST"
+                        enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label>Project name</label>
+                            <input type="text" class="form-control" id="txt_projectName" name="txt_projectName"
+                                value="{{ $project->projectName }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Due date</label>
+                            <input type="datetime-local" class="form-control" id="txt_projectDate" name="txt_projectDate"
+                                value="{{ date('Y-m-d\TH:i', strtotime($project->projectDueDate)) }}">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')

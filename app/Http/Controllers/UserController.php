@@ -56,7 +56,7 @@ class UserController extends Controller
         ];
         $message = [
             'required' => ':attribute must be filled.',
-            'after' => ':attribute must be '
+            'after' => ':attribute should not be past date.'
         ];
         $this->validate($req, $rules, $message, $attribute);
         $projectName = $req->txt_projectName;
@@ -167,6 +167,27 @@ class UserController extends Controller
         return redirect($file->webContentLink);
     }
 
+    public function editProject(Request $req, $id){
+        $rules = [
+            'txt_projectDate' => 'required|after:today'
+        ];
+        $attribute = [
+            'txt_projectDate' => 'Due date'
+        ];
+        $message = [
+            'required' => ':attribute must be filled.',
+            'after' => ':attribute should not be past date.'
+        ];
+        $this->validate($req, $rules, $message, $attribute);
+        $dueDate = $req->txt_projectDate;
+
+        $project = Project::where('projectID', $id)->first();
+        $project->projectDueDate = $dueDate;
+        $project->save();
+
+        return redirect()->route('projectView', ['id' => $id])->with('success', 'Project updated');
+    }
+
     public function test(){
         $user = Auth::user();
 
@@ -174,5 +195,6 @@ class UserController extends Controller
         // dd(Project::where('projectID','1B0455EPen4KXUZJXj19KQw8D4oe_Slei')->first()->file->sortByDesc('created_at')->first());
         // dd(Auth::user()->projectMember);
         // dd(Auth::user()->projectMember[0]->project->file);
+        dd($user->projectMember[0]->project->remainingTime());
     }
 }
