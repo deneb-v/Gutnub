@@ -20,7 +20,7 @@ Route::group(['middleware' => 'user'], function () {
     route::post('/createproject', 'UserController@addProject')->name('createProject');
     route::get('logout', 'AccountController@logout')->name('logout');
 
-    Route::group(['prefix' => 'project'], function () {
+    Route::group(['prefix' => 'project', 'middleware' => 'project'], function () {
         route::get('/{id}', 'UserController@projectView')->name('projectView');
         route::post('/{id}/addcollabolator', 'UserController@addColabolator')->name('addColllabolator');
         route::post('/{id}/uploadfile', 'UserController@uploadFile')->name('uploadFile');
