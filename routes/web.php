@@ -16,24 +16,24 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['middleware' => 'user'], function () {
-    route::get('/', 'UserController@homeView')->name('homeView');
-    route::post('/createproject', 'UserController@addProject')->name('createProject');
-    route::get('logout', 'AccountController@logout')->name('logout');
+    Route::get('/', 'UserController@homeView')->name('homeView');
+    Route::post('/createproject', 'UserController@addProject')->name('createProject');
+    Route::get('logout', 'AccountController@logout')->name('logout');
 
     Route::group(['prefix' => 'project', 'middleware' => 'project'], function () {
-        route::get('/{id}', 'UserController@projectView')->name('projectView');
-        route::post('/{id}/addcollabolator', 'UserController@addColabolator')->name('addColllabolator');
-        route::post('/{id}/uploadfile', 'UserController@uploadFile')->name('uploadFile');
-        route::post('/{id}/editproject', 'UserController@editproject')->name('editproject');
-        route::get('/{id}/downloadfile/{fileID}', 'UserController@downloadFile')->name('downloadFile');
+        Route::get('/{id}', 'UserController@projectView')->name('projectView');
+        Route::post('/{id}/addcollabolator', 'UserController@addColabolator')->name('addColllabolator');
+        Route::post('/{id}/uploadfile', 'UserController@uploadFile')->name('uploadFile');
+        Route::post('/{id}/editproject', 'UserController@editproject')->name('editproject');
+        Route::get('/{id}/downloadfile/{fileID}', 'UserController@downloadFile')->name('downloadFile');
         // Perlu buat DropZone (AJAX nya kyknya)
         Route::post('/upload', 'UserController@fileupload')->name('user.fileupload');
     });
 });
 
 Route::group(['middleware' => 'logged'], function () {
-    route::get('/auth/google', 'AccountController@redirectToGoogleAuth')->name('loginByGoogle');
-    route::get('/auth/google/redirect', 'AccountController@googleAuthCallback')->name('googleCallback');
+    Route::get('/auth/google', 'AccountController@redirectToGoogleAuth')->name('loginByGoogle');
+    Route::get('/auth/google/redirect', 'AccountController@googleAuthCallback')->name('googleCallback');
     Route::get('/login', 'AccountController@loginView')->name('login');
 });
 

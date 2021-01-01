@@ -7,7 +7,25 @@
             <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
                 data-target="#modal_newproject">New project</button>
         </div>
-
+        @if ($errors->any())
+            <div class="alert alert-danger" role="alert">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $err)
+                        <li>{{ $err }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if (Session::has('success'))
+            <div class="alert alert-success mt-3" role="alert">
+                {{ Session::get('success') }}
+            </div>
+        @endif
+        @if (Session::has('error'))
+            <div class="alert alert-danger mt-3" role="alert">
+                {{ Session::get('error') }}
+            </div>
+        @endif
         <div class="row mb-3 ml-1">
             <div class="owl-carousel owl-theme">
                 @foreach ($projectList->sortBy(fn($p, $key) => $p->project->remainingTime()['second']) as $item)
