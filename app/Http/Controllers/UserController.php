@@ -116,7 +116,8 @@ class UserController extends Controller
             return back()->with('error', 'User is not Gutnub user');
         }
 
-        if (!Project_member::isMemberUnique($id, $user->id)) {
+        $member = Project_member::where('projectID', $id)->where('userID', $user->id)->get();
+        if (!$member->isEmpty()) {
             return back()->with('error', 'User already join this project');
         }
 
