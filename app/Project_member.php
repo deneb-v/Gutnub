@@ -33,11 +33,9 @@ class Project_member extends Model
         //         ['pm.userID','=',$userID]
         //     ])->get();
 
-        $member = Project_member::where(
-                ['pm.projectID','=',$projectID],
-                ['pm.userID','=',$userID])->get();
+        $member = Project_member::where('projectID', $projectID)->where('userID', $userID)->get();
         // dd(empty($member));
-        if(!empty($member)){
+        if(empty($member)){
             return true;
         }
         else{

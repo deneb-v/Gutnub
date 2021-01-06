@@ -111,7 +111,7 @@ class UserController extends Controller
         $email = $req->txt_email;
         $drive = new GdriveController();
         $user = User::where('email',$email)->first();
-
+        // dd($user);
         if ($user == null) {
             return back()->with('error', 'User is not Gutnub user');
         }
