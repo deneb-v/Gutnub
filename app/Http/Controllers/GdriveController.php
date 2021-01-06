@@ -133,7 +133,7 @@ class GdriveController extends Controller
 
     function getFile($fileID){
         $file = $this->drive->files->get($fileID,array(
-            'fields' => ['webContentLink','name']
+            'fields' => ['webContentLink','webViewLink','name']
         ));
         return $file;
     }
