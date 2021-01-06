@@ -132,8 +132,8 @@ class GdriveController extends Controller
     }
 
     function getFile($fileID){
-        $file = $this->drive->files->export($fileID,array(
-            'fields' => ['webContentLink','webViewLink','name']
+        $file = $this->drive->files->get($fileID,array(
+            'fields' => ['webViewLink']
         ));
         return $file;
     }

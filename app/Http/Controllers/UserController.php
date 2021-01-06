@@ -152,8 +152,8 @@ class UserController extends Controller
     public function downloadFile($id, $fileID){
         $drive = new GdriveController();
         $file = $drive->getFile($fileID);
-        dd($file);
-        return redirect($file->webContentLink);
+
+        return redirect($file->webViewLink);
     }
 
     public function editProject(Request $req, $id){
