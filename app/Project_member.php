@@ -25,4 +25,23 @@ class Project_member extends Model
     public function project(){
         return $this->belongsTo('App\Project', 'projectID', 'projectID');
     }
+
+    static public function isMemberUnique($projectID, $userID){
+        // $member = DB::table('project_members as pm')
+        //     ->where([
+        //         ['pm.projectID','=',$projectID],
+        //         ['pm.userID','=',$userID]
+        //     ])->get();
+
+        $member = Project_member::where(
+                ['pm.projectID','=',$projectID],
+                ['pm.userID','=',$userID])->get();
+        // dd(empty($member));
+        if(!empty($member)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
