@@ -21,8 +21,8 @@ return [
     |
     */
 
-    // 'default' => env('DB_CONNECTION', 'mysql'),
-    'default' => 'pgsql',
+    'default' => env('DB_CONNECTION', 'mysql'),
+    // 'default' => 'pgsql',
 
     /*
     |--------------------------------------------------------------------------
@@ -70,16 +70,16 @@ return [
             ]) : [],
         ],
 
-        'pgsql' => [
-            'driver'   => 'pgsql',
-            'host'     => $host,
-            'database' => $database,
-            'username' => $username,
-            'password' => $password,
-            'charset'  => 'utf8',
-            'prefix'   => '',
-            'schema'   => 'public',
-        ],
+        // 'pgsql' => [
+        //     'driver'   => 'pgsql',
+        //     'host'     => $host,
+        //     'database' => $database,
+        //     'username' => $username,
+        //     'password' => $password,
+        //     'charset'  => 'utf8',
+        //     'prefix'   => '',
+        //     'schema'   => 'public',
+        // ],
 
 
         'sqlsrv' => [
