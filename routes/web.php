@@ -37,8 +37,6 @@ Route::group(['middleware' => 'logged'], function () {
     Route::get('/login', 'AccountController@loginView')->name('login');
 });
 
-Route::get('/test', 'UserController@test');
-
 
 
 

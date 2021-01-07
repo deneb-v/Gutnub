@@ -30,8 +30,6 @@ class AccountController extends Controller
             $email = $google_user->getEmail();
             $profilePicture = $google_user->getAvatar();
             $refresh_token = $google_user->refreshToken;
-            // dd($google_user);
-            // dump()
             $drive = new GdriveController($refresh_token);
             $gutnubFolderID = $drive->createFolder('Gutnub');
 

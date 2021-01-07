@@ -31,9 +31,6 @@ class GdriveController extends Controller
         }
 
         $this->drive = new Google_Service_Drive($client);
-        // $this->middleware(function ($request, $next) use ($client) {
-        //     return $next($request);
-        // });
     }
 
     public function getDrive(){
